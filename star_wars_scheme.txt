@@ -1,0 +1,22 @@
+# Import Modules
+
+# Build StarWarsLibrary Data Class
+- This is the super class
+- list of movies
+- last updated date
+
+- This will have some methods
+    - Sort Movies
+    - Build film objects
+
+# Build StarWarsFilms Data Class
+- This will inherit the 'name' from the StarWarsLibrary
+- This will have some methods
+    - Check film validity (must have episode no.)
+    - Build Character Objects
+    - Functions associated with building character objects
+
+# Build FilmCharacters Data Class
+- This will inherit from parent classes
+- This only has attributes of film characters
+
