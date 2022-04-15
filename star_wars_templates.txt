@@ -1,0 +1,8 @@
+
+  -----------------------------------
+  * Star Wars Library Checkout Menu *
+  -----------------------------------
+  1. Movie Title
+  2. Movie Characters
+  3. Release Date
+,
