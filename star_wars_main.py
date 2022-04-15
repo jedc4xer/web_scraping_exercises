@@ -168,7 +168,7 @@ class StarWarsLibrary:
             film_obj = StarWarsFilms(*film_info.values())
             films.append(film_obj)
             print("\n######################\n")
-            break # Temporary break to reduce api call load
+            #break # Temporary break to reduce api call load
         self.update_movie_dict(films)    
         print(self.update_date())
         
