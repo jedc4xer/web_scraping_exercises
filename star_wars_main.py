@@ -3,6 +3,12 @@ import requests
 import datetime as dt
 import textwrap
 
+# Issues
+# - Can't figure out how to add field metadata when default values are involved
+# - Can't figure out how to appropriately implement inheritance because 
+#      the parent builds the child, so while it seems obvious, I can't 
+#      figure out how to pass the parent to the child without causing 
+#      dependency problems.
 
 #       ** CLASS STRUCTURES **       #
 ######################################
@@ -188,6 +194,18 @@ class StarWarsFilms:
     rotten_tomatoes: str = None
     box_office_gross: int = None #int = field(metadata={"units":"U.S. Dollars"})
     # Can't seem to use metadata with a default value
+    
+    def __repr__(self):
+        return_string = f"""
+          Title: {self.title}
+          Released: {self.release_date}
+          Director: {self.director}
+          Producer: {self.producer}
+          Characters: {len(self.characters)}
+          Rotten Tomatoes: {self.rotten_tomatoes}
+          Box Office: {self.box_office_gross}
+        """
+        return return_string
     
     def __lt__(self,other):
         if self.episode_id < other.episode_id:
