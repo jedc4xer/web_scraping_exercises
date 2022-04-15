@@ -15,6 +15,9 @@ import os
 ######################################
 
 # Did not use a Data Class for the library due to the complexity of the class
+clear_term = 'cls||clear'
+os.system(clear_term)
+
 class StarWarsLibrary:
     """ Star Wars Library Class """
     
@@ -46,7 +49,6 @@ class StarWarsLibrary:
         return unique_characters, character_dict
         
     def get_movies(self):
-
         passed = False
         while not passed:
             print(self.__templates[0])
@@ -56,12 +58,13 @@ class StarWarsLibrary:
             else:
                 print("That was not a valid response.")
         picked_method = int(picked_method)
-        if picked_method == 2:
-            print('\n  * Available Characters * \n')
+        if picked_method == 2:  
             unique_characters, character_dict = self.get_characters()
             picked_character = None
             passed = False
             while not passed:
+                os.system(clear_term)
+                print('\n  * Available Characters * \n')
                 print(textwrap.fill(" | ".join(unique_characters),75))
                 if picked_character is not None:
                     for character in character_dict:
@@ -119,7 +122,7 @@ class StarWarsLibrary:
         return self.__movie_dict
         
     def update_library(self):
-        print(f'Last Updated: {self.__last_updated}')
+        print(f'Last Updated:\n-------------\n{self.__last_updated}')
         print('Checking for new movies.')
         self.access_star_wars_api()
         self.update_film_database()
@@ -137,7 +140,9 @@ class StarWarsLibrary:
             if film['title'] in self.__movie_dict:
                 continue
             
-            print(f'\nParsing {film["title"]}')
+            spacer = "-" * (len(film["title"]) + 2)
+            print(f'\nParsing * {film["title"]} *')
+            print(f'----------{spacer}')
             film_info = {
                 'title': None, 
                 'episode_id': None, 
@@ -169,7 +174,7 @@ class StarWarsLibrary:
         
     def update_date(self):
         self.__last_updated = self.last_updated = dt.datetime.strftime(dt.datetime.now(),'%A, %B %d, %Y\n%H:%M:%S')
-        self.__last_updated = f'Last Updated: {self.__last_updated}'
+        self.__last_updated = f'Last Updated:\n-------------\n{self.__last_updated}'
         return self.__last_updated
         
 
@@ -283,4 +288,4 @@ while not passed:
     else:
         build.get_movies()
 
-print('Thank you for visiting the Star Wars Library.\n\nHave a "force-fully" productive day!')
+print('Thank you for visiting the Star Wars Library.\n\nHave a "force-fully" productive day!\n')
