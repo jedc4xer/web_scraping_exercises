@@ -2,6 +2,7 @@ from dataclasses import dataclass, field
 import requests
 import datetime as dt
 import textwrap
+import os
 
 # Issues
 # - Can't figure out how to add field metadata when default values are involved
@@ -27,8 +28,9 @@ class StarWarsLibrary:
         self.__omdb_data = None
         self.__movie_dict = {}
         self.__templates = requests.get(
-            'https://raw.githubusercontent.com/jedc4xer/web_scraping_exercises/main/star_wars_templates.txt').text.split(",")
-        self.last_updated = dt.datetime.now() # This will get moved to a function that runs after a successful update
+            'https://raw.githubusercontent.com/jedc4xer/web_scraping_exercises/main/star_wars_templates.txt'
+        ).text.split(",")
+        self.__last_updated = dt.datetime.strftime(dt.datetime.now(),'%A, %B %d, %Y\n%H:%M:%S')
      
     # Allows a user to check out a movie object
     def get_characters(self):
@@ -117,6 +119,7 @@ class StarWarsLibrary:
         return self.__movie_dict
         
     def update_library(self):
+        print(f'Last Updated: {self.__last_updated}')
         print('Checking for new movies.')
         self.access_star_wars_api()
         self.update_film_database()
@@ -134,7 +137,7 @@ class StarWarsLibrary:
             if film['title'] in self.__movie_dict:
                 continue
             
-            print(f'Parsing {film["title"]}')
+            print(f'\nParsing {film["title"]}')
             film_info = {
                 'title': None, 
                 'episode_id': None, 
@@ -159,9 +162,15 @@ class StarWarsLibrary:
             film_info['box_office_gross'] = omdb_data[1]
             film_obj = StarWarsFilms(*film_info.values())
             films.append(film_obj)
-            print("######################")
+            print("\n######################\n")
             break # Temporary break to reduce api call load
         self.update_movie_dict(films)    
+        print(self.update_date())
+        
+    def update_date(self):
+        self.__last_updated = self.last_updated = dt.datetime.strftime(dt.datetime.now(),'%A, %B %d, %Y\n%H:%M:%S')
+        self.__last_updated = f'Last Updated: {self.__last_updated}'
+        return self.__last_updated
         
 
 @dataclass
